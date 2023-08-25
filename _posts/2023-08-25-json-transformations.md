@@ -70,7 +70,7 @@ Results:
 
 Here's a screenshot of these 3 options:
 
-![JSON transformation comparisson](assets/json-transformation-pgsql-josson-jslt.png)
+![JSON transformation comparisson](/blog/assets/json-transformation-pgsql-josson-jslt.png)
 
 As said in the begining, this is just a quick test, so there may be ways to optimize these approaches. I've rerun the tests a couple of times to ensure the results don't include exceptional results, but they're pretty much repeatable. 
 
