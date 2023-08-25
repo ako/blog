@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: default
 title: Ako's notes
 ---
 
@@ -8,7 +8,7 @@ title: Ako's notes
 <ul>
   {% for post in site.posts %}
     <li>
-      <a href="blog/{{ post.url }}">{{ post.title }}</a>
+      <a href="{{ post.url }}">{{ post.title }}</a>
     </li>
   {% endfor %}
 </ul>
