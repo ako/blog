@@ -5,7 +5,7 @@ title: Ako's notes
 
 # Json transformations
 
-A quick, very unscientific, test indicates that using Postgres as a JSON transformation service seems to be faster than using a dedicated JSON query java library. The following compares execution times for a 350Kb JSON document transformed using Postgresql SQL (version 15.3), Josson and JSLT. The postgres DB runs on a docker on the same laptop, macbook pro 16 M1 Max.
+A quick, very unscientific, test indicates that using Postgres as a JSON transformation service seems to be faster than using a dedicated JSON query java library. The following compares execution times for a 350Kb JSON document transformed using [Postgresql SQL][3] (version 15.3), [Josson][1] and [JSLT][2]. The postgres DB runs on a docker on the same laptop, macbook pro 16 M1 Max.
 
 It's interesting to see that JSON Postgres to transform the document is faster than using an in process java library to do the same. In the case of the Postgres approach, the document isn't stored in the database, instead it's provided as a parameter for the sql query. So the SQL timing includes sending the JSON to the database engine, and returning the result.
 
@@ -70,6 +70,11 @@ Results:
 
 Here's a screenshot of these 3 options:
 
-![JSON transformation comparisson](json-transformation-pgsql-josson-jslt.png)
+![JSON transformation comparisson](assets/json-transformation-pgsql-josson-jslt.png)
 
 As said in the begining, this is just a quick test, so there may be ways to optimize these approaches. I've rerun the tests a couple of times to ensure the results don't include exceptional results, but they're pretty much repeatable. 
+
+
+[1]: https://github.com/octomix/josson
+[2]: https://github.com/schibsted/jslt
+[3]: https://www.postgresql.org/docs/current/functions-json.html
