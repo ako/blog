@@ -1,11 +1,11 @@
 ---
 layout: post
-title: JSON transformation - suprising performance of PostgreSQL vs Josson vs JSLT/JSLT2
+title: JSON transformation - surprising performance of PostgreSQL vs Josson vs JSLT/JSLT2
 ---
 
-# Json transformations - suprising performance of PostgreSQL vs Josson vs JSLT/JSLT2
+# Json transformations - surprising performance of PostgreSQL vs Josson vs JSLT/JSLT2
 
-A quick, very unscientific, test indicates that using Postgres as a JSON transformation service seems to be faster than using a dedicated JSON query java library. The following compares execution times for a 350Kb JSON document transformed using [Postgresql SQL][3] (version 15.3), [Josson][1] and [JSLT][2]/[JSLT2][4]. The postgres DB runs on a docker on the same laptop, macbook pro 16 M1 Max.
+A quick, very unscientific, test indicates that using Postgres as a JSON transformation service seems to be faster than using a dedicated JSON query java library. The following compares execution times for a 350Kb JSON document transformed using [Postgresql SQL][3] (version 15.3), [Josson][1] and [JSLT][2]/[JSLT2][4]. The postgres DB runs on a docker on the same laptop, macbook pro 16 M1 Max, the tests are run on Windows 11 running in parallels.
 
 It's interesting to see that JSON Postgres to transform the document is faster than using an in process java library to do the same. In the case of the Postgres approach, the document isn't stored in the database, instead it's provided as a parameter for the sql query. So the SQL timing includes sending the JSON to the database engine, and returning the result.
 
@@ -59,7 +59,16 @@ The JSLT template doesn't include the sorting part, as that's not supported by J
 }]
 ```
 
-Results:
+Updated results running the tests with [Microsoft JDK11 for Arm](5):
+
+| Approach | time parsing source / binding | time transforming | Total |
+|----------|-------------------------------|-------------------|-------|
+| Josson   |                            16 |               156 |   172 |
+| JSLT     |                            31 |                31 |    62 |
+| JSLT2    |                            31 |                32 |    63 |
+| SQL      |                             0 |                63 |    63 |
+
+Results (Eclipse Temurin JDK 11):
 
 | Approach | time parsing source / binding | time transforming | Total |
 |----------|-------------------------------|-------------------|-------|
@@ -67,7 +76,6 @@ Results:
 | JSLT     |                           120 |                94 |   214 |
 | JSLT2    |                            95 |                78 |   173 |
 | SQL      |                            13 |                53 |    66 |
-
 
 Here's a screenshot of these 3 options:
 
@@ -80,3 +88,4 @@ As said in the begining, this is just a quick test, so there may be ways to opti
 [2]: https://github.com/schibsted/jslt
 [3]: https://www.postgresql.org/docs/current/functions-json.html
 [4]: https://github.com/tonysparks/jslt2
+[5]: https://learn.microsoft.com/en-us/java/openjdk/download
