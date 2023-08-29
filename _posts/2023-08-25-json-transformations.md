@@ -36,7 +36,7 @@ The SQL is more complex than it needs to be, but that enables me to replace the 
 The Josson template looks like this:
 
 ```java
-ServiceData.modelObjects.entries().value.map
+ServiceData.modelObjects.**.map
 (   uid,className,type
     ,query_name:props.query_name.dbValues[0]
     ,query_desc:props.query_desc.dbValues[0]
