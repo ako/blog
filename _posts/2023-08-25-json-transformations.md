@@ -5,9 +5,9 @@ title: JSON transformation - surprising performance of PostgreSQL vs Josson vs J
 
 # Json transformations - surprising performance of PostgreSQL vs Josson vs JSLT/JSLT2
 
-A quick, very unscientific, test indicates that using Postgres as a JSON transformation service seems to be faster than using a dedicated JSON query java library. The following compares execution times for a 350Kb JSON document transformed using [Postgresql SQL][3] (version 15.3), [Josson][1] and [JSLT][2]/[JSLT2][4]. The postgres DB runs on a docker on the same laptop, macbook pro 16 M1 Max, the tests are run on Windows 11 running in parallels.
+A quick, very unscientific, test indicates that using Postgres as a JSON transformation service seems to be as fast as using a dedicated JSON query java library. The following compares execution times for a 350Kb JSON document transformed using [Postgresql SQL][3] (version 15.3), [Josson][1] and [JSLT][2]/[JSLT2][4]. The postgres DB runs on a docker on the same laptop, macbook pro 16 M1 Max, the tests are run on Windows 11 running in parallels.
 
-It's interesting to see that JSON Postgres to transform the document is faster than using an in process java library to do the same. In the case of the Postgres approach, the document isn't stored in the database, instead it's provided as a parameter for the sql query. So the SQL timing includes sending the JSON to the database engine, and returning the result.
+It's interesting to see that using JSONB Postgres to transform the document is ~~faster~~ equally fast to using an in process java library to do the same. In the case of the Postgres approach, the document isn't stored in the database, instead it's provided as a parameter for the sql query. So the SQL timing includes sending the JSON to the database engine, and returning the result.
 
 SQL used is as follows:
 
@@ -82,7 +82,6 @@ Here's a screenshot of these 3 options:
 ![JSON transformation comparisson](/blog/assets/2023-08-25-json-transformation-pgsql-josson-jslt.png)
 
 As said in the begining, this is just a quick test, so there may be ways to optimize these approaches. I've rerun the tests a couple of times to ensure the results don't include exceptional results, but they're pretty much repeatable. 
-
 
 [1]: https://github.com/octomix/josson
 [2]: https://github.com/schibsted/jslt
